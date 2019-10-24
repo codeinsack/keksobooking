@@ -2,6 +2,20 @@
 
 var data = require('./data');
 
+function fillMapWithPins(announcements, $pinTemplate, $mapPins) {
+  var $fragment = document.createDocumentFragment();
+  announcements.forEach(function (announcement) {
+    var $pin = document.importNode($pinTemplate.content, true);
+    var $btn = $pin.firstElementChild;
+    $btn.style.left = announcement.location.x + 'px';
+    $btn.style.top = announcement.location.y + 'px';
+    $btn.firstElementChild.src = announcement.author.avatar;
+    $btn.firstElementChild.alt = announcement.offer.title;
+    $fragment.appendChild($pin);
+  });
+  $mapPins.appendChild($fragment);
+}
+
 function generateObjects() {
   var MIN_COORD_X = 300;
   var MAX_COORD_X = 900;
@@ -63,4 +77,5 @@ function getRandomNumber(min, max) {
 
 module.exports = {
   generateObjects: generateObjects,
+  fillMapWithPins: fillMapWithPins,
 };
