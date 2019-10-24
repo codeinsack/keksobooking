@@ -1,14 +1,14 @@
 'use strict';
 
 var AVATARS = [
-  'img/avatar/user01.png',
-  'img/avatar/user02.png',
-  'img/avatar/user03.png',
-  'img/avatar/user04.png',
-  'img/avatar/user05.png',
-  'img/avatar/user06.png',
-  'img/avatar/user07.png',
-  'img/avatar/user08.png',
+  'img/avatars/user01.png',
+  'img/avatars/user02.png',
+  'img/avatars/user03.png',
+  'img/avatars/user04.png',
+  'img/avatars/user05.png',
+  'img/avatars/user06.png',
+  'img/avatars/user07.png',
+  'img/avatars/user08.png',
 ];
 var TITLES = [
   'title1',
