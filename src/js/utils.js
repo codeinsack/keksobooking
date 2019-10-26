@@ -43,7 +43,7 @@ function generateObjects() {
 
     var announcement = {
       author: {
-        avatar: data.avatars[i],
+        avatar: 'img/avatars/user0' + (i + 1) + '.png',
       },
       offer: {
         title: data.titles[i],
@@ -68,6 +68,78 @@ function generateObjects() {
   return announcements;
 }
 
+function createCard($cardTemplate, announcement) {
+  var cardTemplateClone = document.importNode($cardTemplate.content, true);
+  // Title
+  cardTemplateClone.querySelector('.popup__title').textContent = announcement.offer.title;
+  // Address
+  cardTemplateClone.querySelector('.popup__text--address').textContent = announcement.offer.address;
+  // Price
+  var price = cardTemplateClone.querySelector('.popup__text--price').innerText;
+  var updatedPrice = price.replace(/\d+/, announcement.offer.price);
+  cardTemplateClone.querySelector('.popup__text--price').innerText = updatedPrice;
+  // Type
+  var type = announcement.offer.type;
+  var modifiedType = '';
+  switch (type) {
+    case 'flat':
+      modifiedType = 'Квартира';
+      break;
+    case 'bungalo':
+      modifiedType = 'Бунгало';
+      break;
+    case 'house':
+      modifiedType = 'Дом';
+      break;
+    case 'palace':
+      modifiedType = 'Дворец';
+      break;
+  }
+  cardTemplateClone.querySelector('.popup__type').innerText = modifiedType;
+  // Guests and rooms
+  var roomsCount = announcement.offer.rooms;
+  var guestsCount = announcement.offer.guests;
+  var roomsText = roomsCount === 1 ? ' комната' : ' комнаты ';
+  var guestsText = guestsCount === 1 ? ' гостя' : ' гостей';
+  var capacityText = roomsCount + roomsText + ' для ' + guestsCount + guestsText;
+  cardTemplateClone.querySelector('.popup__text--capacity').innerText = capacityText;
+  // Checkin and checkout
+  var timeText = cardTemplateClone.querySelector('.popup__text--time').innerText;
+  var times = timeText.split(',');
+  var updatedCheckinText = times[0].replace(/\d\d:\d\d/, announcement.offer.checkin);
+  var updatedCheckoutText = times[1].replace(/\d\d:\d\d/, announcement.offer.checkout);
+  var updatedTimeText = updatedCheckinText + ',' + updatedCheckoutText;
+  cardTemplateClone.querySelector('.popup__text--time').innerText = updatedTimeText;
+  // Features
+  var $featuresList = cardTemplateClone.querySelector('.popup__features');
+  var $features = $featuresList.querySelectorAll('li');
+  $features.forEach(function (item) {
+    var $feature = item.classList[1];
+    var feature = /\w+$/.exec($feature)[0];
+    if (announcement.offer.features.indexOf(feature) === -1) {
+      item.remove();
+    }
+  });
+  // Description
+  cardTemplateClone.querySelector('.popup__description').innerText = announcement.offer.description;
+  // Photos
+  var $photos = cardTemplateClone.querySelector('.popup__photos');
+  $photos.innerHTML = '';
+  announcement.offer.photos.forEach(function (photoUrl) {
+    var $photo = document.createElement('img');
+    $photo.classList.add('popup__photo');
+    $photo.src = photoUrl;
+    $photo.width = 45;
+    $photo.height = 40;
+    $photo.alt = 'Фотография жилья';
+    $photos.appendChild($photo);
+  });
+  // Avatar
+  cardTemplateClone.querySelector('.popup__avatar').src = announcement.author.avatar;
+
+  return cardTemplateClone;
+}
+
 function getRandomNumber(min, max) {
   var random = min + Math.random() * (max + 1 - min);
   return Math.floor(random);
@@ -76,4 +148,5 @@ function getRandomNumber(min, max) {
 module.exports = {
   generateObjects: generateObjects,
   fillMapWithPins: fillMapWithPins,
+  createCard: createCard,
 };

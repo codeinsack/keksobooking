@@ -1,15 +1,5 @@
 'use strict';
 
-var AVATARS = [
-  'img/avatars/user01.png',
-  'img/avatars/user02.png',
-  'img/avatars/user03.png',
-  'img/avatars/user04.png',
-  'img/avatars/user05.png',
-  'img/avatars/user06.png',
-  'img/avatars/user07.png',
-  'img/avatars/user08.png',
-];
 var TITLES = [
   'Уютно и не дорого',
   'Первоклассное место',
@@ -62,7 +52,6 @@ var PHOTOS = [
 ];
 
 module.exports = {
-  avatars: AVATARS,
   titles: TITLES,
   addresses: ADDRESSES,
   types: TYPES,
