@@ -5,13 +5,13 @@ var data = require('./data');
 function fillMapWithPins(announcements, $pinTemplate, $mapPins) {
   var $fragment = document.createDocumentFragment();
   announcements.forEach(function (announcement) {
-    var $pin = document.importNode($pinTemplate.content, true);
-    var $btn = $pin.firstElementChild;
+    var $pinClone = document.importNode($pinTemplate.content, true);
+    var $btn = $pinClone.firstElementChild;
     $btn.style.left = announcement.location.x + 'px';
     $btn.style.top = announcement.location.y + 'px';
     $btn.firstElementChild.src = announcement.author.avatar;
     $btn.firstElementChild.alt = announcement.offer.title;
-    $fragment.appendChild($pin);
+    $fragment.appendChild($pinClone);
   });
   $mapPins.appendChild($fragment);
 }
@@ -30,16 +30,14 @@ function generateObjects() {
   var announcements = [];
 
   for (var i = 0; i < data.titles.length; i++) {
-    var addressX = getRandomNumber(MIN_COORD_X, MAX_COORD_X);
-    var addressY = getRandomNumber(MIN_COORD_Y, MAX_COORD_Y);
     var price = getRandomNumber(MIN_PRICE, MAX_PRICE);
     var indexType = getRandomNumber(0, data.types.length - 1);
     var totalRooms = getRandomNumber(MIN_ROOMS_COUNT, MAX_ROOMS_COUNT);
     var totalGuests = getRandomNumber(MIN_GUESTS_COUNT, MAX_GUESTS_COUNT);
     var indexCheckin = getRandomNumber(0, data.times.length - 1);
     var indexCheckout = getRandomNumber(0, data.times.length - 1);
-    var indexFeatures = getRandomNumber(0, data.features.length - 1);
-    var indexPhotos = getRandomNumber(0, data.photos.length - 1);
+    var featuresCount = getRandomNumber(1, data.features.length);
+    var photosCount = getRandomNumber(1, data.features.length);
     var locationX = getRandomNumber(MIN_COORD_X, MAX_COORD_X);
     var locationY = getRandomNumber(MIN_COORD_Y, MAX_COORD_Y);
 
@@ -49,16 +47,16 @@ function generateObjects() {
       },
       offer: {
         title: data.titles[i],
-        address: addressX + ', ' + addressY,
+        address: data.addresses[i],
         price: price,
         type: data.types[indexType],
         rooms: totalRooms,
         guests: totalGuests,
         checkin: data.times[indexCheckin],
         checkout: data.times[indexCheckout],
-        features: data.features[indexFeatures],
+        features: data.features.slice(0, featuresCount),
         description: data.descriptions[i],
-        photos: data.photos[indexPhotos],
+        photos: data.photos.slice(0, photosCount),
       },
       location: {
         x: locationX,
