@@ -12,14 +12,11 @@
   },
   "devDependencies": {
     "eslint": "6.3.0",
-    "eslint-config-htmlacademy": "0.5.2",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "eslint-config-htmlacademy": "0.5.2"
   },
   "license": "MIT",
   "dependencies": {},
   "scripts": {
-    "build": "webpack --watch",
     "test": "eslint src/js/"
   },
   "engines": {

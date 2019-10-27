@@ -1,6 +1,6 @@
 'use strict';
 
-var utils = require('./utils');
+var utils = window.utils;
 
 var $map = document.querySelector('.map');
 var $mapPins = document.querySelector('.map__pins');
