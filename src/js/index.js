@@ -15,10 +15,14 @@ document.querySelector('.map__filters-container').before($card);
 
 var $pinMain = document.querySelector('.map__pin--main');
 $pinMain.addEventListener('mousedown', function () {
-  $map.classList.remove('map--faded');
+  makeMapActive();
 });
 $pinMain.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
-    $map.classList.remove('map--faded');
+    makeMapActive();
   }
 });
+
+function makeMapActive() {
+  $map.classList.remove('map--faded');
+}
